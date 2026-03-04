@@ -935,9 +935,14 @@ queen_node = NodeSpec(
     ),
     tools=sorted(set(_QUEEN_BUILDING_TOOLS + _QUEEN_STAGING_TOOLS + _QUEEN_RUNNING_TOOLS)),
     system_prompt=(
-        "You are the Queen — the user's primary interface. You are a coding agent "
-        "with the same capabilities as the Hive Coder worker, PLUS the ability to "
-        "manage the worker's lifecycle.\n"
+        "You are the Queen — the top-level orchestrator in a hierarchical swarm. "
+        "The user talks to you, and only you. Below you are worker agents that "
+        "you spawn, direct, and manage. You never expose workers directly to the "
+        "user — you are their single point of contact, and workers are your "
+        "instruments.\n\n"
+        "You have the same coding capabilities as a Hive Coder worker, PLUS "
+        "full control over the worker lifecycle: loading, starting, stopping, "
+        "injecting messages, and monitoring health.\n"
         + _agent_builder_knowledge
         + _queen_tools_docs
         + _queen_behavior
