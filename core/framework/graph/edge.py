@@ -761,4 +761,15 @@ class GraphSpec(BaseModel):
                     "GCU nodes must be declared as subagents of a parent node."
                 )
 
+        # All sub_agents references must point to registered nodes
+        all_node_ids = {n.id for n in self.nodes}
+        for node in self.nodes:
+            for sa_id in node.sub_agents or []:
+                if sa_id not in all_node_ids:
+                    errors.append(
+                        f"Node '{node.id}' references sub_agent '{sa_id}' "
+                        "which is not registered in the nodes list. "
+                        "Ensure the sub_agent node is included in the agent's nodes."
+                    )
+
         return {"errors": errors, "warnings": warnings}
